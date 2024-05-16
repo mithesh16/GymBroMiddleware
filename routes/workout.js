@@ -1,7 +1,7 @@
 const express = require('express')
 
 const router=express.Router()
-const workout=require('../models/workoutModel')
+const workouts=require('../models/workoutModel')
 
 const {
     createWorkout,

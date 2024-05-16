@@ -2,27 +2,31 @@ const  mongoose  = require("mongoose");
 
 const Schema =mongoose.Schema
 
-// const workoutSchema=new Schema({
-//     title:{
-//         type: String,
-//         required:true
-//     },
-//     week:
-//         {
-//             type: Number,
-//             required:true
-//     },
-//     muscle:{
-//         type:String,
-//         required:true
-//     },
-//     workouts:[{
-//         name:{type: String},
-//         reps:{type: Array},
-//         weight:{type: Array}
-//     }],
+const workoutSchema=new Schema({
+    title:{
+        type: String,
+        required:true
+    },
+    week:
+        {
+            type: Number,
+            required:true
+    },
+    muscle:{
+        type:String,
+        required:true
+    }, 
+    email:{
+        type:String,
+        required:true
+    },
+    exercises:[{
+        name:{type: String},
+        reps:{type: Array},
+        weights:{type: Array}
+    }],
    
-// },{ timestamps:true})
+},{ timestamps:true})
 
 const workoutTemplateSchema=new Schema({
     templateName:{
@@ -44,5 +48,6 @@ const workoutTemplateSchema=new Schema({
    
 },{ timestamps:true})
 
-//module.export=mongoose.model('Workout', workoutSchema);
-module.exports=mongoose.model('workoutTemplates', workoutTemplateSchema);
+
+//module.exports=mongoose.model('workoutTemplates', workoutTemplateSchema);
+module.exports=mongoose.model('workouts', workoutSchema);

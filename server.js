@@ -8,6 +8,13 @@ const bodyParser = require('body-parser');
 const workoutroutes=require('./routes/workout')
 const workoutTemplatesRoutes=require('./routes/workoutTemplate')
 
+// const corsOptions = {
+//     origin: '*', // Allow all origins
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed HTTP methods
+//     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+//     credentials: true, // Allow credentials
+//   };
+
 const app=express()
 app.use(cors());
 
@@ -25,8 +32,9 @@ app.use('/workoutTemplates',workoutTemplatesRoutes)
 //connect to db
 mongoose.connect(process.env.URI)
 
+
 .then(()=>{
-    app.listen(process.env.PORT,()=>{
+    app.listen(3000,()=>{
         console.log("Connected to DB Server listening at port 3000")
     })
 }) 

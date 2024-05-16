@@ -1,14 +1,15 @@
 const express = require('express')
-const workout=require('../models/workoutModel');
+const workouts=require('../models/workoutModel');
 const { default: mongoose } = require('mongoose');
 
 
 //Function to get all workouts
 const getAllWorkouts=async(req,res)=>{
-    console.log("hello")
+
+    const user_email=req.query.email
     try{
-        const workouts=await workout.find({}).sort({createdAt: -1})
-        res.status(200).json(workouts);
+        const allworkouts=await workouts.find({email:user_email}).sort({createdAt: -1})
+        res.status(200).json(allworkouts);
     }
     catch(err){
         res.status(400).json({error:err.message})
@@ -20,7 +21,7 @@ const getWorkout=async(req,res)=>{
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({error:"ID not valid"});
     }
-        const workout=await workout.findById(id)
+        const workout=await workouts.findById(id)
         if(!workout){
         return res.status(404).json({error:"No Workout found"})
         }
@@ -30,13 +31,14 @@ const getWorkout=async(req,res)=>{
 
 //Function to create new workout
 const createWorkout=async(req,res)=>{
-    const {title,week,muscle,workouts,email}=req.body
 
+    const {title,week,muscle,exercises,email}=req.body
     try{
-        const newWorkout=await workout.Create({title,week,muscle,workouts,email})
+        const newWorkout=await workouts.create({title,week,muscle,email,exercises})
         res.status(200).json(newWorkout);
     }
     catch(err){
+                console.log(err)
                 res.status(400).json({error:err.message})
     }
 
@@ -45,12 +47,12 @@ const createWorkout=async(req,res)=>{
 //Function to update workout
 const updateWorkout=async(req,res)=>{
     const {id}=req.params;
-    console.log(id)
+
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({error:"ID not valid"});
     }
     try{
-        const workout=await workout.findOneAndUpdate({_id:id},{
+        const workout=await workouts.findOneAndUpdate({_id:id},{
             ...req.body
         })
         if(!workout){
@@ -67,15 +69,14 @@ const updateWorkout=async(req,res)=>{
 
 //Function to delete a workout
 const deleteWorkout=async(req,res)=>{
-    const id= parseInt(req.params.id)
-    console.log(id)
+    const id= req.params.id
     if(!mongoose.Types.ObjectId.isValid(id)){
         console.log("Not valid")
         return res.status(404).json({error:"ID not valid"});
     }
     try{
         console.log("Hi")
-        const workout=await workout.findOneAndDelete({_id: id})
+        const workout=await workouts.findOneAndDelete({_id: id})
         res.status(200).json(workout);
     }
     catch(err){
