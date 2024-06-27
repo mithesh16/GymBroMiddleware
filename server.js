@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 const workoutroutes=require('./routes/workout')
 const workoutTemplatesRoutes=require('./routes/workoutTemplate')
+const paymentroutes=require('./routes/payment')
 
 // const corsOptions = {
 //     origin: '*', // Allow all origins
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/workouts',workoutroutes)
 app.use('/workoutTemplates',workoutTemplatesRoutes)
+app.use('/payments',paymentroutes)
 
 //connect to db
 mongoose.connect(process.env.URI)
